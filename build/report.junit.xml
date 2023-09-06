@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="/Users/agustin/Documents/Light-It/scramble-extensions/tests/ResponseDocumentingTest.php" tests="2" assertions="2" errors="0" warnings="0" failures="0" skipped="2" time="0.172161">
+    <testsuite name="P\Tests\ResponseDocumentingTest" file="/Users/agustin/Documents/Light-It/scramble-extensions/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(223) : eval()'d code" tests="2" assertions="2" errors="0" warnings="0" failures="0" skipped="2" time="0.172161">
+      <testcase name="laravel responder success support" assertions="1" time="0.166159">
+        <skipped/>
+      </testcase>
+      <testcase name="laravel responder error support" assertions="1" time="0.006001">
+        <skipped/>
+      </testcase>
+    </testsuite>
+  </testsuite>
+</testsuites>
