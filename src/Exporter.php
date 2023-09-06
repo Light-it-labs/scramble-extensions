@@ -1,38 +1,42 @@
 <?php
 
+declare(strict_types=1);
+
+namespace LightIt\ScrambleExtensions;
+
 use LightIt\ScrambleExtensions\InfererExtensions\ResponderTypeInfer;
 use LightIt\ScrambleExtensions\OperationExtensions\ResponderExtension;
 use LightIt\ScrambleExtensions\TypeToSchemaExtensions\ResponderTypeToSchema;
 
-class Exporter
+class LightitScrambleExtensions
 {
-    public function getOperationExtensions(): array
+    public static function getOperationExtensions(): array
     {
         return [
             ResponderExtension::class,
         ];
     }
 
-    public function getTypeToSchemaExtensions(): array
+    public static function getTypeToSchemaExtensions(): array
     {
         return [
             ResponderTypeToSchema::class,
         ];
     }
 
-    public function getInfererExtensions(): array
+    public static function getInfererExtensions(): array
     {
         return [
             ResponderTypeInfer::class,
         ];
     }
 
-    public function getAllExtensions(): array
+    public static function getAllExtensions(): array
     {
         return array_merge(
-            $this->getOperationExtensions(),
-            $this->getTypeToSchemaExtensions(),
-            $this->getInfererExtensions(),
+            self::getOperationExtensions(),
+            self::getTypeToSchemaExtensions(),
+            self::getInfererExtensions(),
         );
     }
 }
