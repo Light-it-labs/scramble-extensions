@@ -57,11 +57,11 @@ we need to add the following lines to our project's composer.json
 
 ## Scramble Extensions Usage
 
-##Include Extensions to Scramble
+## Include Extensions to Scramble
 
-<p>To use the extensions that the package offers you will have to modify Scramble's config file. In the </p>
+<p>To use the extensions that the package offers you will have to modify Scramble's config file. Include the package extension in the "extensions" property. </p>
 
-###Example
+### Example
 ```
 'servers' => null,
 
