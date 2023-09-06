@@ -129,6 +129,14 @@ class ResponderExtension extends OperationExtension
                 return null;
             }
 
+            if ($expression->args[0]->value instanceof \PhpParser\Node\Expr\ClassConstFetch) {
+                $constantName = $expression->args[0]->value->name->toString();
+                $constantClass = $expression->args[0]->value->class->toString();
+                $constant = constant("$constantClass::$constantName");
+
+                return $constant;
+            }
+
             if (!$expression->args[0]->value instanceof \PhpParser\Node\Scalar\LNumber) {
                 return null;
             }
