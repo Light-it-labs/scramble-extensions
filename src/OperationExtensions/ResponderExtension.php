@@ -1,6 +1,6 @@
 <?php
 
-namespace Dedoc\Scramble\Support\OperationExtensions;
+namespace LightIt\ScrambleExtensions\OperationExtensions;
 
 use Dedoc\Scramble\Extensions\OperationExtension;
 use Dedoc\Scramble\Support\Generator\Combined\AnyOf;

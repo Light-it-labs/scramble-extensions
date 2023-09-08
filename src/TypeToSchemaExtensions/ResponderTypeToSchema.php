@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dedoc\Scramble\Support\TypeToSchemaExtensions;
+namespace LightIt\ScrambleExtensions\TypeToSchemaExtensions;
 
 use Dedoc\Scramble\Extensions\TypeToSchemaExtension;
 use Dedoc\Scramble\Support\Generator\Reference;
@@ -19,7 +19,7 @@ use ReflectionClass;
 
 class ResponderTypeToSchema extends TypeToSchemaExtension
 {
-    public function shouldHandle(Type $type): bool
+    public function shouldHandle(Type $type)
     {
         return $type->isInstanceOf(TransformerAbstract::class);
     }
