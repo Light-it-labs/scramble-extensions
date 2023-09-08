@@ -1,6 +1,6 @@
 <?php
 
-namespace LightIt\ScrambleExtensions\OperationExtensions;
+namespace Dedoc\Scramble\Support\OperationExtensions;
 
 use Dedoc\Scramble\Extensions\OperationExtension;
 use Dedoc\Scramble\Support\Generator\Combined\AnyOf;
@@ -35,13 +35,19 @@ class ResponderExtension extends OperationExtension
         $responses = collect($returnStatements)
             ->map(function (mixed $returnStatement) {
                 $statusCode = $this->getStatusCode($returnStatement->expr);
+                $parameter = $this->getParameter($returnStatement->expr);
                 $transformer = $this->getTransformer($returnStatement->expr);
 
                 if (!$transformer) {
                     return null;
                 }
 
-                $response = $this->openApiTransformer->toResponse(new Generic($transformer));
+                $response = $this->openApiTransformer->toResponse(new Generic(
+                    $transformer,
+                    [
+                        $parameter,
+                    ]
+                ));
                 $response->code = $statusCode ?? 200;
 
                 return $response;
@@ -116,6 +122,28 @@ class ResponderExtension extends OperationExtension
         }
 
         return $this->getTransformer($expression->var);
+    }
+
+    private function getParameter($expression)
+    {
+        if (!$expression) {
+            return null;
+        }
+
+        if ($expression->name->toString() === 'success' || $expression->name->toString() === 'error') {
+
+            if (!isset($expression->args[0])) {
+                return null;
+            }
+
+            return $expression->args[0]->value;
+        }
+
+        if (!isset($expression->var)) {
+            return null;
+        }
+
+        return $this->getParameter($expression->var);
     }
 
     private function getStatusCode($expression): ?int
