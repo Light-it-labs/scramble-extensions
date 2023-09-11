@@ -26,11 +26,12 @@ class ResponderExtension extends OperationExtension
 
         $statements = $definition->getStmts();
 
-        $returnStatements = array_filter($statements, function (mixed $statement) {
-            return $statement instanceof Return_
-                && $statement->expr instanceof \PhpParser\Node\Expr\MethodCall
-                && $this->usesResponderClass($statement->expr);
-        });
+
+
+        $returnStatements = collect($statements)
+            ->map(fn ($statement) => $this->getInnerReturnStatement($statement))
+            ->flatten()
+            ->filter();
 
         $responses = collect($returnStatements)
             ->map(function (mixed $returnStatement) {
@@ -177,5 +178,22 @@ class ResponderExtension extends OperationExtension
         }
 
         return $this->getStatusCode($expression->var);
+    }
+
+    private function getInnerReturnStatement($statement)
+    {
+        if (
+            $statement instanceof Return_
+            && $statement->expr instanceof \PhpParser\Node\Expr\MethodCall
+            && $this->usesResponderClass($statement->expr)
+        ) {
+            return $statement;
+        }
+
+        if (isset($statement->stmts) || $statement instanceof \PhpParser\Node\Stmt\Switch_) {
+            return array_map([$this, 'getInnerReturnStatement'], $statement->stmts);
+        }
+
+        return null;
     }
 }
