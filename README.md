@@ -52,7 +52,7 @@ we need to add the following lines to our project's composer.json
   After that, composer will also look for packages in this repo and we can execute the following command.
 
   ```
-  composer require lightit/scrambleExtensions
+  composer require lightit/scramble-extensions:dev-main
   ```
 
 ## Scramble Extensions Usage
