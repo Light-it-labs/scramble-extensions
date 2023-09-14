@@ -1,5 +1,5 @@
 {
-    "name": "lightit/scramble-extensions",
+    "name": "light-it/scramble-extensions",
     "autoload": {
         "psr-4": {
             "LightIt\\ScrambleExtensions\\": "src/"
@@ -7,8 +7,8 @@
     },
     "authors": [
         {
-            "name": "Agustin",
-            "email": "agustinfernandez98.smc@gmail.com"
+            "name": "Agustin Fernandez",
+            "email": "agustin.fernandez@lightit.io"
         }
     ],
     "require": {
