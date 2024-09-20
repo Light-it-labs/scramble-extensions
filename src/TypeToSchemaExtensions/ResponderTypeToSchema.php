@@ -31,15 +31,15 @@ class ResponderTypeToSchema extends TypeToSchemaExtension
     {
         $transformerArray = ($def = $type->getMethodDefinition('transform'))
             ? $def->type->getReturnType()
-            : new UnknownType();
+            : new UnknownType;
 
         $reflectionClass = new ReflectionClass($type->name);
 
         $relationsArray = $this->getPropertyItems($reflectionClass, 'relations', true);
         $loadArray = $this->getPropertyItems($reflectionClass, 'load', false);
 
-        if (!$transformerArray instanceof ArrayType) {
-            return new UnknownType();
+        if (! $transformerArray instanceof ArrayType) {
+            return new UnknownType;
         }
 
         $array = new ArrayType(
@@ -63,7 +63,7 @@ class ResponderTypeToSchema extends TypeToSchemaExtension
         $openApiType = $this->openApiTransformer->transform($type);
 
         return Response::make(200)
-            ->description('`' . $this->components->uniqueSchemaName($type->name) . '`')
+            ->description('`'.$this->components->uniqueSchemaName($type->name).'`')
             ->setContent(
                 'application/json',
                 Schema::fromType($openApiType),

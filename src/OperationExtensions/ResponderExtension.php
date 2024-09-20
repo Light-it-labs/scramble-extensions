@@ -20,13 +20,11 @@ class ResponderExtension extends OperationExtension
     {
         $definition = $routeInfo->methodNode();
 
-        if (!$definition instanceof ClassMethod) {
+        if (! $definition instanceof ClassMethod) {
             return;
         }
 
         $statements = $definition->getStmts();
-
-
 
         $returnStatements = collect($statements)
             ->map(fn ($statement) => $this->getInnerReturnStatement($statement))
@@ -39,7 +37,7 @@ class ResponderExtension extends OperationExtension
                 $parameter = $this->getParameter($returnStatement->expr);
                 $transformer = $this->getTransformer($returnStatement->expr);
 
-                if (!$transformer) {
+                if (! $transformer) {
                     return null;
                 }
 
@@ -85,7 +83,7 @@ class ResponderExtension extends OperationExtension
 
     private function usesResponderClass($expression): ?bool
     {
-        if (!$expression) {
+        if (! $expression) {
             return false;
         }
 
@@ -93,7 +91,7 @@ class ResponderExtension extends OperationExtension
             return true;
         }
 
-        if (!isset($expression->var)) {
+        if (! isset($expression->var)) {
             return null;
         }
 
@@ -102,23 +100,23 @@ class ResponderExtension extends OperationExtension
 
     private function getTransformer($expression): ?string
     {
-        if (!$expression) {
+        if (! $expression) {
             return null;
         }
 
         if ($expression->name->toString() === 'success' || $expression->name->toString() === 'error') {
-            if (!isset($expression->args[1])) {
+            if (! isset($expression->args[1])) {
                 return null;
             }
 
-            if (!$expression->args[1]->value instanceof \PhpParser\Node\Expr\ClassConstFetch) {
+            if (! $expression->args[1]->value instanceof \PhpParser\Node\Expr\ClassConstFetch) {
                 return null;
             }
 
             return $expression->args[1]->value->class->toString();
         }
 
-        if (!isset($expression->var)) {
+        if (! isset($expression->var)) {
             return null;
         }
 
@@ -127,20 +125,20 @@ class ResponderExtension extends OperationExtension
 
     private function getParameter($expression)
     {
-        if (!$expression) {
+        if (! $expression) {
             return null;
         }
 
         if ($expression->name->toString() === 'success' || $expression->name->toString() === 'error') {
 
-            if (!isset($expression->args[0])) {
+            if (! isset($expression->args[0])) {
                 return null;
             }
 
             return $expression->args[0]->value;
         }
 
-        if (!isset($expression->var)) {
+        if (! isset($expression->var)) {
             return null;
         }
 
@@ -149,12 +147,12 @@ class ResponderExtension extends OperationExtension
 
     private function getStatusCode($expression): ?int
     {
-        if (!$expression) {
+        if (! $expression) {
             return null;
         }
 
         if ($expression->name->toString() === 'respond') {
-            if (!isset($expression->args[0])) {
+            if (! isset($expression->args[0])) {
                 return null;
             }
 
@@ -166,14 +164,14 @@ class ResponderExtension extends OperationExtension
                 return $constant;
             }
 
-            if (!$expression->args[0]->value instanceof \PhpParser\Node\Scalar\LNumber) {
+            if (! $expression->args[0]->value instanceof \PhpParser\Node\Scalar\LNumber) {
                 return null;
             }
 
             return $expression->args[0]->value->value;
         }
 
-        if (!isset($expression->var)) {
+        if (! isset($expression->var)) {
             return null;
         }
 

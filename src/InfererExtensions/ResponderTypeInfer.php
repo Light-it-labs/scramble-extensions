@@ -7,20 +7,21 @@ namespace LightIt\ScrambleExtensions\InfererExtensions;
 use Dedoc\Scramble\Infer\Definition\ClassDefinition;
 use Dedoc\Scramble\Infer\Extensions\ExpressionTypeInferExtension;
 use Dedoc\Scramble\Infer\Scope\Scope;
+use Dedoc\Scramble\Infer\Services\FileNameResolver;
+use Dedoc\Scramble\Support\Generator\Types\UnknownType;
+use Dedoc\Scramble\Support\ResponseExtractor\ModelInfo;
 use Dedoc\Scramble\Support\Type\ObjectType;
 use Dedoc\Scramble\Support\Type\Type;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use League\Fractal\TransformerAbstract;
 use PhpParser\Node;
 use PhpParser\Node\Expr;
-use Dedoc\Scramble\Support\Generator\Types\UnknownType;
-use Dedoc\Scramble\Infer\Services\FileNameResolver;
-use Dedoc\Scramble\Support\ResponseExtractor\ModelInfo;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class ResponderTypeInfer implements ExpressionTypeInferExtension
 {
     private ObjectType $modelType;
+
     private string $modelPropertyName;
 
     /** @var array<array{0: string, 1: ObjectType}> */
@@ -29,7 +30,7 @@ class ResponderTypeInfer implements ExpressionTypeInferExtension
     public function getType(Expr $node, Scope $scope): ?Type
     {
         if (
-            !$scope->classDefinition()?->isInstanceOf(TransformerAbstract::class)
+            ! $scope->classDefinition()?->isInstanceOf(TransformerAbstract::class)
             || $scope->classDefinition()?->name === TransformerAbstract::class
         ) {
             return null;
@@ -48,7 +49,7 @@ class ResponderTypeInfer implements ExpressionTypeInferExtension
         if (
             $node instanceof Node\Expr\PropertyFetch && $node->var?->name === $this->modelPropertyName
             && is_string($node->name?->name)
-            && !array_key_exists($node->name->name, $scope->classDefinition()->properties)
+            && ! array_key_exists($node->name->name, $scope->classDefinition()->properties)
             && ($type = $this->modelType($scope->classDefinition(), $scope))
         ) {
             return $scope->getPropertyFetchType($type, $node->name->name);
@@ -127,7 +128,7 @@ class ResponderTypeInfer implements ExpressionTypeInferExtension
         $modelName = (string) Str::of(Str::of($jsonResourceClassName)->explode('\\')->last())->replace('Resource', '')->singular();
 
         $modelClass = "App\\Models\\{$modelName}";
-        if (!class_exists($modelClass)) {
+        if (! class_exists($modelClass)) {
             return null;
         }
 

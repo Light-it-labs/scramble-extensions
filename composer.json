@@ -12,24 +12,24 @@
         }
     ],
     "require": {
-        "dedoc/scramble": "^0.8.3",
+        "dedoc/scramble": "^0.11",
         "php": "^8.1",
         "flugger/laravel-responder": "^3.3",
-        "illuminate/contracts": "^8.0.0|^9.0.0|^10.0.0",
+        "illuminate/contracts": "^10.0|^11.0",
         "league/fractal": "^0.20.1",
-        "nikic/php-parser": "^4.0",
+        "nikic/php-parser": "^5.0",
         "phpstan/phpdoc-parser": "^1.0",
         "spatie/laravel-package-tools": "^1.9.2"
     },
     "require-dev": {
-        "doctrine/dbal": "^3.4",
+        "doctrine/dbal": "^3.4|^4.0",
         "laravel/pint": "^v1.1.0",
-        "nunomaduro/collision": "^5.0|^v6.0",
-        "orchestra/testbench": "^6.0|^7.0|^8.0",
-        "pestphp/pest": "^1.21",
-        "pestphp/pest-plugin-laravel": "^1.2",
-        "phpunit/phpunit": "^9.5",
-        "spatie/pest-plugin-snapshots": "^1.1"
+        "nunomaduro/collision": "^v8.0",
+        "orchestra/testbench": "^8.0|^9.0",
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0",
+        "phpunit/phpunit": "^11.0",
+        "spatie/pest-plugin-snapshots": "^2.2"
     },
     "config": {
         "allow-plugins": {
